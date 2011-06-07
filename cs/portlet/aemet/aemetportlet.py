@@ -3,17 +3,13 @@ from zope.interface import implements
 from plone.portlets.interfaces import IPortletDataProvider
 from plone.app.portlets.portlets import base
 
-# TODO: If you define any fields for the portlet configuration schema below
-# do not forget to uncomment the following import
-#from zope import schema
+from zope import schema
 from zope.formlib import form
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-# TODO: If you require i18n translation for any of your schema fields below,
-# uncomment the following to import your package MessageFactory
-#from cs.portlet.aemet import AEMETPortletMessageFactory as _
-
+from cs.portlet.aemet import AEMETPortletMessageFactory as _
+from plone.memoize.ram import cache
 
 class IAEMETPortlet(IPortletDataProvider):
     """A portlet
@@ -23,14 +19,17 @@ class IAEMETPortlet(IPortletDataProvider):
     same.
     """
 
-    # TODO: Add any zope.schema fields here to capture portlet configuration
-    # information. Alternatively, if there are no settings, leave this as an
-    # empty interface - see also notes around the add form and edit form
-    # below.
+    portlet_title = schema.TextLine(title=_(u"Title"),
+                            description=_(u"Enter the title of the portlet"),
+                            required=True)
 
-    # some_field = schema.TextLine(title=_(u"Some field"),
-    #                              description=_(u"A field to use"),
-    #                              required=True)
+    url = schema.TextLine(title=_(u"URL"),
+                          description=_(u"Enter the URL of the XML file with the weather data"),
+                          required=True)
+
+    daynumber = schema.Int(title=_('Day number to show'),
+                           description=_('The number of days to show in the portlet'),
+                           required=True)
 
 
 class Assignment(base.Assignment):
@@ -42,23 +41,10 @@ class Assignment(base.Assignment):
 
     implements(IAEMETPortlet)
 
-    # TODO: Set default values for the configurable parameters here
-
-    # some_field = u""
-
-    # TODO: Add keyword parameters for configurable parameters here
-    # def __init__(self, some_field=u""):
-    #    self.some_field = some_field
-
-    def __init__(self):
-        pass
-
-    @property
-    def title(self):
-        """This property is used to give the title of the portlet in the
-        "manage portlets" screen.
-        """
-        return "AEMET Weather"
+    def __init__(self, portlet_title=u"", url=u'', daynumber=0):
+        self.portlet_title = portlet_title
+        self.url = url
+        self.daynumber = daynumber
 
 
 class Renderer(base.Renderer):
@@ -71,6 +57,20 @@ class Renderer(base.Renderer):
 
     render = ViewPageTemplateFile('aemetportlet.pt')
 
+    def title(self):
+        return self.data.portlet_title
+
+    def _render_cache_key(func, item):
+        return item.data.url
+
+    @cache(_render_cache_key)
+    def get_weather(self):
+        from aemetparser import parseXML
+        try:
+            data = parseXML(self.data.url)
+            return data[:self.data.daynumber]
+        except:
+            return []
 
 class AddForm(base.AddForm):
     """Portlet add form.
@@ -83,21 +83,6 @@ class AddForm(base.AddForm):
 
     def create(self, data):
         return Assignment(**data)
-
-
-# NOTE: If this portlet does not have any configurable parameters, you
-# can use the next AddForm implementation instead of the previous.
-
-# class AddForm(base.NullAddForm):
-#     """Portlet add form.
-#     """
-#     def create(self):
-#         return Assignment()
-
-
-# NOTE: If this portlet does not have any configurable parameters, you
-# can remove the EditForm class definition and delete the editview
-# attribute from the <plone:portlet /> registration in configure.zcml
 
 
 class EditForm(base.EditForm):

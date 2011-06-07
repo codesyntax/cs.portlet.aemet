@@ -14,10 +14,10 @@ setup(name='cs.portlet.aemet',
         "Framework :: Plone",
         "Programming Language :: Python",
         ],
-      keywords='',
-      author='',
-      author_email='',
-      url='http://svn.plone.org/svn/collective/',
+      keywords='weather portlet plone aemet',
+      author='Dani Reguera',
+      author_email='dreguera@codesyntax.com',
+      url='http://code.codesyntax.com/private/cs.portlet.aemet',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['cs', 'cs.portlet'],
@@ -26,6 +26,7 @@ setup(name='cs.portlet.aemet',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
+          'lxml',
       ],
       entry_points="""
       # -*- Entry points: -*-

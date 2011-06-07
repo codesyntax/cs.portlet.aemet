@@ -22,6 +22,7 @@
           the 'editview' attribute from this statement.
        -->
 
+
      <plone:portlet
          name="cs.portlet.aemet.AEMETPortlet"
          interface=".aemetportlet.IAEMETPortlet"
