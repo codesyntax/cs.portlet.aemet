@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<portlets>
+
+ <!-- Portlet type registrations -->
+
+ <portlet
+   addview="cs.portlet.aemet.AEMETPortlet"
+   title="AEMET Weather"
+   description="A portlet to show the weather via AEMET"
+   />
+
+</portlets>
