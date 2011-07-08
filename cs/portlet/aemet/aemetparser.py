@@ -14,23 +14,24 @@ def getHumedadRelativa(dia):
 
 
 def getProbPrec(dia):
+    
     hiz = {}
     for datu in dia.xpath('prob_precipitacion'):
         if (datu.get('periodo')):
             hiz[datu.get('periodo')] = datu.text or ''
         else:
-            return datu.text or ''
+            hiz['00-24'] = datu.text or ''
 
     return hiz
 
 def getCotaNieveProb(dia):
-    
+   
     hiz = {}
     for datu in dia.xpath('cota_nieve_prov'):
         if (datu.get('periodo')):
             hiz[datu.get('periodo')] = datu.text or ''
         else:
-            return datu.text or ''
+            hiz['00-24'] = datu.text or ''
 
     return hiz
 
@@ -40,15 +41,19 @@ def getEstadoCielo(dia):
         if (datu.get('periodo')):
             hiz[datu.get('periodo')] = { 'valor': datu.text or '' , 'descripcion': datu.get('descripcion')}
         else:
-            return  { 'valor': datu.text or '' , 'descripcion': datu.get('descripcion')}
+            hiz['00-24'] = { 'valor': datu.text or '' , 'descripcion': datu.get('descripcion')}
 
     return hiz
 
 
 def getRachaMax(dia):
+    
     hiz = {}
     for datu in dia.xpath('racha_max'):
-        hiz[datu.get('periodo')] = datu.text or ''
+        if (datu.get('periodo')):
+            hiz[datu.get('periodo')] = datu.text or ''
+        else:
+            hiz['00-24'] = datu.text or ''
 
     return hiz 
     
@@ -65,7 +70,7 @@ def getViento(dia):
             hiz[datu.get('periodo')] = {datu[0].tag : datu[0].text or '', datu[1].tag:datu[1].text or ''}
         else:
             
-            {datu[0].tag : datu[0].text or '', datu[1].tag:datu[1].text or ''}
+            hiz['00-24'] = {datu[0].tag : datu[0].text or '', datu[1].tag:datu[1].text or ''}
     return hiz
 
 
@@ -73,8 +78,8 @@ def parseXML(url):
     
     URL_aemet = url 
 
-    doc_aemet=etree.parse(URL_aemet).getroot()
-
+    doc_aemet = etree.parse(URL_aemet).getroot()
+    
     dias = doc_aemet.xpath('//prediccion')[0].getchildren()  
   
     dias_parsed = []
@@ -92,5 +97,5 @@ def parseXML(url):
         dia_hiz['viento'] = getViento(dia)        
         dia_hiz['fecha'] = dia.get('fecha')
         dias_parsed.append(dia_hiz)
-
+    
     return dias_parsed

@@ -1,81 +1,110 @@
 <div tal:define="weather view/get_weather;">
+  <dl class="portlet" id="portlet-meteo">
+    <dt class="portletHeader">
+      <a tal:attributes="href string: meteo_details"
+	 i18n:translate="portlet_heading">Weather</a>
+    </dt>
+
+    <dd class="portletItem odd"
+	id="portlet-weather-location"
+	tal:condition="weather/error | nothing">
+
+      <div i18n:translate="portlet_error">
+	No information available.
+      </div>
+
+    </dd>
+    
+    <dd class="portletItem even"
+	id="portlet-meteo-location"
+	tal:replace="nothing"
+	tal:condition="not:weather/error|nothing">
+      <a href=""
+	 alt="More details"
+	 title="More details"
+	 i18n:attributes="alt portlet_more_details;
+			  title portlet_more_details;"
+	 tal:attributes="href string: /meteo_details"
+	 tal:content="weather/location">Location</a>
+    </dd>
+    
+
+    <dd class="portletItem odd"
+	id="portlet-meteo-multiple"
+	tal:condition="not:weather/error|nothing">
+
+      <table>
+	<tal:loop repeat="dayData weather">
+	  <tr>
+	    <td class="meteoDay">
+	      <span tal:content="dayData/fecha" i18n:translate=""></span>
+	    </td>
+	    <td>
+	      <tal:estadocielo 
+		  define="descripcion python:dayData['estado_cielo']['00-12']['descripcion']">
+		<tal:desc condition="descripcion">
+		  <img src="" alt="" title=""
+		       height="35" width="35"
+		       tal:attributes="src string:http://www.aemet.es/imagenes/gif/estado_cielo/${dayData/estado_cielo/00-12/valor}.gif;
+				       alt descripcion;
+				       title descripcion" />
+
+		</tal:desc>
+		</tal:estadocielo>
+	</td>
+	<td>
+	      <tal:estadocielo 
+		  define="descripcion python:dayData['estado_cielo']['12-24']['descripcion']">
+		<tal:desc condition="descripcion">
+		  <img src="" alt="" title=""
+		       height="35" width="35"
+		       tal:attributes="src string:http://www.aemet.es/imagenes/gif/estado_cielo/${dayData/estado_cielo/12-24/valor}.gif;
+				       alt descripcion;
+				       title descripcion" />
+
+		</tal:desc>
+		</tal:estadocielo>
+	</td>
+	<td>
+	      <tal:estadocielo 
+		  define="descripcion python:dayData['temperatura']['maxima']">
+		<tal:desc condition="descripcion">
+		  <p tal:replace="python:dayData['temperatura']['maxima']"> </p>
+
+		</tal:desc>
+		</tal:estadocielo>
+	</td>
+	<td>
+	&nbsp;
+	</td>
+	<td>
+	      <tal:estadocielo 
+		  define="descripcion python:dayData['temperatura']['minima']">
+		<tal:desc condition="descripcion">
+		  <p tal:replace="python:dayData['temperatura']['minima']"> </p>
+
+		</tal:desc>
+		</tal:estadocielo>
+	</td>
+	  </tr>
+	 
+	</tal:loop>
+      </table>
+    </dd>
+
+    <dd class="portletFooter discreet"
+	id="portlet-meteo-legal"
+	tal:condition="not: weather/error|nothing"
+	i18n:translate="portlet_source">
+      Source:
+      <span i18n:name="aemet-link">
+	<a href="http://www.aemet.es"
+	   title="Spanish State Meteorological Agency (www.aemet.es)"
+	   i18n:attributes="title aemet">AEMET</a>
+      </span>
+    </dd>
 
 
-<dl class="portlet" id="portlet-meteo">
-  <dt class="portletHeader">
-    <a tal:attributes="href string: meteo_details"
-       i18n:translate="portlet_heading">Weather</a>
-  </dt>
-
-  <dd class="portletItem odd"
-      id="portlet-weather-location"
-      tal:condition="weather/error | nothing">
-
-    <div i18n:translate="portlet_error">
-      No information available.
-    </div>
-
-  </dd>
-  
-  <dd class="portletItem even"
-      id="portlet-meteo-location"
-      tal:replace="nothing"
-      tal:condition="not:weather/error|nothing">
-    <a href=""
-       alt="More details"
-       title="More details"
-       i18n:attributes="alt portlet_more_details;
-                        title portlet_more_details;"
-       tal:attributes="href string: /meteo_details"
-       tal:content="weather/location">Location</a>
-  </dd>
-  
-
-  <dd class="portletItem odd"
-      id="portlet-meteo-multiple"
-      tal:condition="not:weather/error|nothing">
-
-    <table>
-      <tal:loop repeat="dayData weather">
-        <tr>
-          <td class="meteoDay">
-            <span tal:content="dayData/dayOfWeek" i18n:translate=""></span>
-          </td>
-          <td rowspan="2">
-            <img src="" alt="" title=""
-                 height="35" width="35"
-                 tal:attributes="src dayData/iconUrl;
-                                 alt dayData/iconAlternativeText;
-                                 title dayData/iconAlternativeText" />
-          </td>
-        </tr>
-        <tr>
-          <td tal:define="maxTemp dayData/maxTemperature;
-                          minTemp dayData/minTemperature">
-            <span class="meteoBlue"
-                  tal:content="structure minTemp">
-            </span>&nbsp;&frasl;&nbsp;<span class="meteoRed"
-                                            tal:content="structure maxTemp">
-                                      </span>
-          </td>
-        </tr>
-      </tal:loop>
-    </table>
-  </dd>
-
-  <dd class="portletFooter discreet"
-      id="portlet-meteo-legal"
-      tal:condition="not: weather/error|nothing"
-      i18n:translate="portlet_source">
-    Source:
-    <span i18n:name="aemet-link">
-      <a href="http://www.aemet.es"
-         title="Spanish State Meteorological Agency (www.aemet.es)"
-         i18n:attributes="title aemet">AEMET</a>
-    </span>
-  </dd>
-
-
-</dl>
+  </dl>
 
 </div>
