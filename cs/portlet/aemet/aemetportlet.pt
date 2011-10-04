@@ -1,8 +1,8 @@
 <div tal:define="weather view/get_weather;">
   <dl class="portlet" id="portlet-meteo">
-    <dt class="portletHeader">
-      <a tal:attributes="href string: meteo_details"
-	 i18n:translate="portlet_heading">Weather</a>
+    <dt class="portletHeader"
+        tal:content="view/title">
+      Weather
     </dt>
 
     <dd class="portletItem odd"
@@ -13,19 +13,6 @@
 	No information available.
       </div>
 
-    </dd>
-    
-    <dd class="portletItem even"
-	id="portlet-meteo-location"
-	tal:replace="nothing"
-	tal:condition="not:weather/error|nothing">
-      <a href=""
-	 alt="More details"
-	 title="More details"
-	 i18n:attributes="alt portlet_more_details;
-			  title portlet_more_details;"
-	 tal:attributes="href string: /meteo_details"
-	 tal:content="weather/location">Location</a>
     </dd>
     
 
@@ -50,9 +37,9 @@
 				       title descripcion" />
 
 		</tal:desc>
-		</tal:estadocielo>
-	</td>
-	<td>
+              </tal:estadocielo>
+            </td>
+            <td>
 	      <tal:estadocielo 
 		  define="descripcion python:dayData['estado_cielo']['12-24']['descripcion']">
 		<tal:desc condition="descripcion">
@@ -63,31 +50,31 @@
 				       title descripcion" />
 
 		</tal:desc>
-		</tal:estadocielo>
-	</td>
-	<td>
+              </tal:estadocielo>
+            </td>
+            <td>
 	      <tal:estadocielo 
 		  define="descripcion python:dayData['temperatura']['maxima']">
 		<tal:desc condition="descripcion">
 		  <p tal:replace="python:dayData['temperatura']['maxima']"> </p>
 
 		</tal:desc>
-		</tal:estadocielo>
-	</td>
-	<td>
-	&nbsp;
-	</td>
-	<td>
+              </tal:estadocielo>
+            </td>
+            <td>
+              &nbsp;
+            </td>
+            <td>
 	      <tal:estadocielo 
 		  define="descripcion python:dayData['temperatura']['minima']">
 		<tal:desc condition="descripcion">
 		  <p tal:replace="python:dayData['temperatura']['minima']"> </p>
 
 		</tal:desc>
-		</tal:estadocielo>
-	</td>
+              </tal:estadocielo>
+            </td>
 	  </tr>
-	 
+          
 	</tal:loop>
       </table>
     </dd>
@@ -103,8 +90,5 @@
 	   i18n:attributes="title aemet">AEMET</a>
       </span>
     </dd>
-
-
   </dl>
-
 </div>
