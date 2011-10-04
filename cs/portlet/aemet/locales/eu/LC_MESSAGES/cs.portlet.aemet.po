@@ -1,0 +1,55 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2011-10-04 12:45+0000\n"
+"PO-Revision-Date: 2011-10-04 14:48+0100\n"
+"Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+
+#: ./aemetportlet.py:30
+msgid "Day number to show"
+msgstr "Erakutsiko den egun kopurua"
+
+#: ./aemetportlet.py:27
+msgid "Enter the URL of the XML file with the weather data"
+msgstr "Idatzi eguraldiaren informazioa duen XML fitxategiaren helbidea"
+
+#: ./aemetportlet.py:23
+msgid "Enter the title of the portlet"
+msgstr "Idatzi portletaren izenburua"
+
+#: ./aemetportlet.py:31
+msgid "The number of days to show in the portlet"
+msgstr "Egun kopurua"
+
+#: ./aemetportlet.py:22
+msgid "Title"
+msgstr "Izenburua"
+
+#: ./aemetportlet.py:26
+msgid "URL"
+msgstr "URLa"
+
+#. Default: "Spanish State Meteorological Agency (www.aemet.es)"
+#: ./aemetportlet.pt:89
+msgid "aemet"
+msgstr "Estatuko Meteorologia Agentzia (www.aemet.es)"
+
+#. Default: "No information available."
+#: ./aemetportlet.pt:13
+msgid "portlet_error"
+msgstr "Ez dago informaziorik."
+
+#. Default: "Source: ${aemet-link}"
+#: ./aemetportlet.pt:88
+msgid "portlet_source"
+msgstr "Iturria: ${aemet-link}"
+
