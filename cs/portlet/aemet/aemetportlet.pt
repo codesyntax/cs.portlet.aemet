@@ -1,4 +1,5 @@
-<div tal:define="weather view/get_weather;">
+<div tal:define="weather view/get_weather;"
+     i18n:domain="cs.portlet.aemet">
   <dl class="portlet" id="portlet-meteo">
     <dt class="portletHeader"
         tal:content="view/title">
