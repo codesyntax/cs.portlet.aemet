@@ -47,6 +47,9 @@ class Assignment(base.Assignment):
         self.daynumber = daynumber
 
 
+    def title(self):
+        return self.portlet_title
+
 class Renderer(base.Renderer):
     """Portlet renderer.
 
