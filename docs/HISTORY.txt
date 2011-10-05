@@ -1,7 +1,17 @@
 Changelog
 =========
 
-1.0dev (unreleased)
+1.2 (2011-10-06)
+-----------------
+- Some docs [erral]
+
+
+1.1 (2011-10-05)
+------------------
+- Added i18n [erral]
+
+
+1.0 (unreleased)
 -------------------
 
-- Initial release
+- Initial release [dani]
