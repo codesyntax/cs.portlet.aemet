@@ -1,7 +1,7 @@
 Introduction
 ============
 
-This products creates a portlet to show weather information 
+This products creates a portlet to show weather information
 as provided by AEMET_ .
 
 It parses an XML file and creates a data structure to create
@@ -11,14 +11,14 @@ the constantly changing HTML of the AEMET_ site, it failed easily.
 
 Now AEMET provides a fixed XML for each place, so you just have
 to create a portlet and type the URL of the XML file you want
-to show. The parsing results are cached in memory using 
+to show. The parsing results are cached in memory using
 `plone.memoize`_'s RAMCache.
 
 If you want to customize the look and feel of the portlet, use
 `z3c.jbot`_ and look at the internals of the dict created after
 parsing the XML at aemetparser.py file.
 
-You can see examples of customization of this portlet at: 
+You can see examples of customization of this portlet at:
 
 -  http://www.aretxabaleta.com
 -  http://www.eibar.es (to be published in January 2012)
@@ -26,7 +26,7 @@ You can see examples of customization of this portlet at:
 Compatibility
 ==============
 
-Tested on Plone 4.0.x and 4.1. Not tested on Plone 3.3.x but it should work.
+Tested on Plone 4.0.x, 4.1, 4.2 and 4.3 Not tested on Plone 3.3.x but it should work.
 
 
 Credits
