@@ -25,10 +25,11 @@ def getHumedadRelativa(dia):
 def getProbPrec(dia):
     hiz = {}
     for datu in dia.xpath('prob_precipitacion'):
-        if (datu.get('periodo')):
-            hiz[datu.get('periodo')] = datu.text or ''
-        else:
-            hiz['00-24'] = datu.text or ''
+        if datu.text:
+            if (datu.get('periodo')):
+                hiz[datu.get('periodo')] = datu.text or ''
+            else:
+                hiz['00-24'] = datu.text or ''
 
     return hiz
 
@@ -36,10 +37,11 @@ def getProbPrec(dia):
 def getCotaNieveProb(dia):
     hiz = {}
     for datu in dia.xpath('cota_nieve_prov'):
-        if (datu.get('periodo')):
-            hiz[datu.get('periodo')] = datu.text or ''
-        else:
-            hiz['00-24'] = datu.text or ''
+        if datu.text:
+            if (datu.get('periodo')):
+                hiz[datu.get('periodo')] = datu.text or ''
+            else:
+                hiz['00-24'] = datu.text or ''
 
     return hiz
 
@@ -47,16 +49,17 @@ def getCotaNieveProb(dia):
 def getEstadoCielo(dia):
     hiz = {}
     for datu in dia.xpath('estado_cielo'):
-        if (datu.get('periodo')):
-            hiz[datu.get('periodo')] = {
-                'valor': datu.text or '',
-                'descripcion': datu.get('descripcion')
-            }
-        else:
-            hiz['00-24'] = {
-                'valor': datu.text or '',
-                'descripcion': datu.get('descripcion')
-            }
+        if datu.text and datu.get('descripcion', ''):
+            if (datu.get('periodo')):
+                hiz[datu.get('periodo')] = {
+                    'valor': datu.text or '',
+                    'descripcion': datu.get('descripcion')
+                }
+            else:
+                hiz['00-24'] = {
+                    'valor': datu.text or '',
+                    'descripcion': datu.get('descripcion')
+                }
 
     return hiz
 
@@ -65,10 +68,11 @@ def getRachaMax(dia):
 
     hiz = {}
     for datu in dia.xpath('racha_max'):
-        if (datu.get('periodo')):
-            hiz[datu.get('periodo')] = datu.text or ''
-        else:
-            hiz['00-24'] = datu.text or ''
+        if datu.text:
+            if (datu.get('periodo')):
+                hiz[datu.get('periodo')] = datu.text or ''
+            else:
+                hiz['00-24'] = datu.text or ''
 
     return hiz
 
@@ -83,17 +87,18 @@ def getUvMax(dia):
 def getViento(dia):
     hiz = {}
     for datu in dia.xpath('viento'):
-        if (datu.get('periodo')):
-            hiz[datu.get('periodo')] = {
-                datu[0].tag: datu[0].text or '',
-                datu[1].tag: datu[1].text or ''
-            }
-        else:
+        if datu[0].text or datu[1].text:
+            if (datu.get('periodo')):
+                hiz[datu.get('periodo')] = {
+                    datu[0].tag: datu[0].text or '',
+                    datu[1].tag: datu[1].text or ''
+                }
+            else:
 
-            hiz['00-24'] = {
-                datu[0].tag: datu[0].text or '',
-                datu[1].tag: datu[1].text or '',
-            }
+                hiz['00-24'] = {
+                    datu[0].tag: datu[0].text or '',
+                    datu[1].tag: datu[1].text or '',
+                }
     return hiz
 
 
