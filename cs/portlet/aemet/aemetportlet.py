@@ -1,15 +1,13 @@
-from zope.interface import implements
-
-from plone.portlets.interfaces import IPortletDataProvider
+from aemetparser import parseXML
+from cs.portlet.aemet import AEMETPortletMessageFactory as _
 from plone.app.portlets.portlets import base
-
+from plone.memoize.ram import cache
+from plone.portlets.interfaces import IPortletDataProvider
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.formlib import form
+from zope.interface import implements
 
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-from cs.portlet.aemet import AEMETPortletMessageFactory as _
-from plone.memoize.ram import cache
 
 class IAEMETPortlet(IPortletDataProvider):
     """A portlet
@@ -19,17 +17,23 @@ class IAEMETPortlet(IPortletDataProvider):
     same.
     """
 
-    portlet_title = schema.TextLine(title=_(u"Title"),
-                            description=_(u"Enter the title of the portlet"),
-                            required=True)
+    portlet_title = schema.TextLine(
+        title=_(u"Title"),
+        description=_(u"Enter the title of the portlet"),
+        required=True,
+    )
 
-    url = schema.TextLine(title=_(u"URL"),
-                          description=_(u"Enter the URL of the XML file with the weather data"),
-                          required=True)
+    url = schema.TextLine(
+        title=_(u"URL"),
+        description=_(u"Enter the URL of the XML file with the weather data"),
+        required=True,
+    )
 
-    daynumber = schema.Int(title=_('Day number to show'),
-                           description=_('The number of days to show in the portlet'),
-                           required=True)
+    daynumber = schema.Int(
+        title=_('Day number to show'),
+        description=_('The number of days to show in the portlet'),
+        required=True,
+    )
 
 
 class Assignment(base.Assignment):
@@ -46,9 +50,9 @@ class Assignment(base.Assignment):
         self.url = url
         self.daynumber = daynumber
 
-
     def title(self):
         return self.portlet_title
+
 
 class Renderer(base.Renderer):
     """Portlet renderer.
@@ -68,12 +72,12 @@ class Renderer(base.Renderer):
 
     @cache(_render_cache_key)
     def get_weather(self):
-        from aemetparser import parseXML
         try:
             data = parseXML(self.data.url)
             return data[:self.data.daynumber]
         except:
             return []
+
 
 class AddForm(base.AddForm):
     """Portlet add form.
