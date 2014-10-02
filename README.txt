@@ -21,7 +21,7 @@ parsing the XML at aemetparser.py file.
 You can see examples of customization of this portlet at:
 
 -  http://www.aretxabaleta.com
--  http://www.eibar.es
+-  http://www.eibar.eus
 -  http://www.deba.net
 
 Compatibility
