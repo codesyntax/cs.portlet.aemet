@@ -68,7 +68,8 @@ class Renderer(base.Renderer):
         return self.data.portlet_title
 
     def _render_cache_key(func, item):
-        return item.data.url
+        context = aq_inner(self.context)
+        return [context.absolute_url(), time() // (43200)]
 
     @cache(_render_cache_key)
     def get_weather(self):
