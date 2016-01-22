@@ -7,6 +7,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.formlib import form
 from zope.interface import implements
+from Acquisition import aq_inner
 
 
 class IAEMETPortlet(IPortletDataProvider):
