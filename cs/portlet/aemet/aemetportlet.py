@@ -8,6 +8,7 @@ from zope import schema
 from zope.formlib import form
 from zope.interface import implements
 from Acquisition import aq_inner
+from time import time
 
 
 class IAEMETPortlet(IPortletDataProvider):
@@ -69,7 +70,7 @@ class Renderer(base.Renderer):
         return self.data.portlet_title
 
     def _render_cache_key(func, item):
-        context = aq_inner(self.context)
+        context = aq_inner(item.context)
         return [context.absolute_url(), time() // (43200)]
 
     @cache(_render_cache_key)
