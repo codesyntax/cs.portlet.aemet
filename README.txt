@@ -20,9 +20,9 @@ parsing the XML at aemetparser.py file.
 
 You can see examples of customization of this portlet at:
 
--  http://www.aretxabaleta.com
+-  http://www.aretxabaleta.eus
 -  http://www.eibar.eus
--  http://www.deba.net
+-  http://www.deba.eus
 
 Compatibility
 ==============
