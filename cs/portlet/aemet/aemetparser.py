@@ -1,5 +1,5 @@
 from lxml import etree
-
+import urllib2
 
 def getTemperatura(dia):
     return {
@@ -105,9 +105,7 @@ def getViento(dia):
 def parseXML(url):
 
     URL_aemet = url
-
-    doc_aemet = etree.parse(URL_aemet).getroot()
-
+    doc_aemet = etree.parse(urllib2.urlopen(URL_aemet)).getroot()
     dias = doc_aemet.xpath('//prediccion')[0].getchildren()
 
     dias_parsed = []
