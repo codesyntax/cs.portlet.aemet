@@ -1,30 +1,30 @@
-from lxml import etree
 import urllib2
+import xml.etree.ElementTree as ET
 
 def getTemperatura(dia):
     return {
-        dia.xpath('temperatura')[0][0].tag: dia.xpath('temperatura')[0][0].text or '',
-        dia.xpath('temperatura')[0][1].tag: dia.xpath('temperatura')[0][1].text or ''
+        dia.findall('temperatura')[0][0].tag: dia.findall('temperatura')[0][0].text or '',
+        dia.findall('temperatura')[0][1].tag: dia.findall('temperatura')[0][1].text or ''
     }
 
 
 def getSensTermica(dia):
     return {
-        dia.xpath('sens_termica')[0][0].tag: dia.xpath('sens_termica')[0][0].text or '',
-        dia.xpath('sens_termica')[0][1].tag: dia.xpath('sens_termica')[0][1].text or ''
+        dia.findall('sens_termica')[0][0].tag: dia.findall('sens_termica')[0][0].text or '',
+        dia.findall('sens_termica')[0][1].tag: dia.findall('sens_termica')[0][1].text or ''
     }
 
 
 def getHumedadRelativa(dia):
     return {
-        dia.xpath('humedad_relativa')[0][0].tag: dia.xpath('humedad_relativa')[0][0].text or '',
-        dia.xpath('humedad_relativa')[0][1].tag : dia.xpath('humedad_relativa')[0][1].text or ''
+        dia.findall('humedad_relativa')[0][0].tag: dia.findall('humedad_relativa')[0][0].text or '',
+        dia.findall('humedad_relativa')[0][1].tag : dia.findall('humedad_relativa')[0][1].text or ''
     }
 
 
 def getProbPrec(dia):
     hiz = {}
-    for datu in dia.xpath('prob_precipitacion'):
+    for datu in dia.findall('prob_precipitacion'):
         if datu.text:
             if (datu.get('periodo')):
                 hiz[datu.get('periodo')] = datu.text or ''
@@ -36,7 +36,7 @@ def getProbPrec(dia):
 
 def getCotaNieveProb(dia):
     hiz = {}
-    for datu in dia.xpath('cota_nieve_prov'):
+    for datu in dia.findall('cota_nieve_prov'):
         if datu.text:
             if (datu.get('periodo')):
                 hiz[datu.get('periodo')] = datu.text or ''
@@ -48,7 +48,7 @@ def getCotaNieveProb(dia):
 
 def getEstadoCielo(dia):
     hiz = {}
-    for datu in dia.xpath('estado_cielo'):
+    for datu in dia.findall('estado_cielo'):
         if datu.text and datu.get('descripcion', ''):
             if (datu.get('periodo')):
                 hiz[datu.get('periodo')] = {
@@ -67,7 +67,7 @@ def getEstadoCielo(dia):
 def getRachaMax(dia):
 
     hiz = {}
-    for datu in dia.xpath('racha_max'):
+    for datu in dia.findall('racha_max'):
         if datu.text:
             if (datu.get('periodo')):
                 hiz[datu.get('periodo')] = datu.text or ''
@@ -78,15 +78,15 @@ def getRachaMax(dia):
 
 
 def getUvMax(dia):
-    if (dia.xpath('uv_max')):
-        return dia.xpath('uv_max')[0].text or ''
+    if (dia.findall('uv_max')):
+        return dia.findall('uv_max')[0].text or ''
     else:
         return ''
 
 
 def getViento(dia):
     hiz = {}
-    for datu in dia.xpath('viento'):
+    for datu in dia.findall('viento'):
         if datu[0].text or datu[1].text:
             if (datu.get('periodo')):
                 hiz[datu.get('periodo')] = {
@@ -105,8 +105,8 @@ def getViento(dia):
 def parseXML(url):
 
     URL_aemet = url
-    doc_aemet = etree.parse(urllib2.urlopen(URL_aemet)).getroot()
-    dias = doc_aemet.xpath('//prediccion')[0].getchildren()
+    doc_aemet = ET.fromstring(urllib2.urlopen('http://www.aemet.es/xml/municipios/localidad_20030.xml').read())
+    dias = doc_aemet.findall('prediccion')[0].getchildren()
 
     dias_parsed = []
 

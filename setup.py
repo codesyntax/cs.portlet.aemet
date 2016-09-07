@@ -30,7 +30,6 @@ setup(name='cs.portlet.aemet',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
-          'lxml',
       ],
       entry_points="""
       # -*- Entry points: -*-
