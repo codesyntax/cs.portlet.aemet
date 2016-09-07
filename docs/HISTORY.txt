@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.4 (unreleased)
+----------------
+
+- Remove lxml [libargutxi]
+
 1.3 (2013-11-04)
 ----------------
 
