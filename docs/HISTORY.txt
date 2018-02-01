@@ -4,7 +4,8 @@ Changelog
 1.5 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- fix url parsing
+  [erral]
 
 
 1.4 (2018-02-01)
