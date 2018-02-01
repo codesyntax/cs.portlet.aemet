@@ -103,9 +103,7 @@ def getViento(dia):
 
 
 def parseXML(url):
-
-    URL_aemet = url
-    doc_aemet = ET.fromstring(urllib2.urlopen('http://www.aemet.es/xml/municipios/localidad_20030.xml').read())
+    doc_aemet = ET.fromstring(urllib2.urlopen(url).read())
     dias = doc_aemet.findall('prediccion')[0].getchildren()
 
     dias_parsed = []
